@@ -1,0 +1,20 @@
+{
+  "name": "testing-timestamp",
+  "version": "0.0.0",
+  "description": "Track lifecycle events for tests.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rweda/testing-timestamp.git"
+  },
+  "author": "Redwood EDA (http://redwoodeda.com/)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rweda/testing-timestamp/issues"
+  },
+  "homepage": "https://github.com/rweda/testing-timestamp#readme",
+  "dependencies": {}
+}

@@ -1,0 +1,17 @@
+{
+  "name": "testing-timestamp",
+  "description": "Track lifecycle events for tests.",
+  "main": "index.js",
+  "authors": [
+    "Redwood EDA (http://redwoodeda.com/)"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/rweda/testing-timestamp",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

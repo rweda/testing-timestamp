@@ -1,0 +1,63 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script src="/components/webcomponentsjs/webcomponents-lite.js"></script>
+    <script src="/components/web-component-tester/browser.js"></script>
+    <link rel="import" href="/components/flush-async/flush-async.html">
+  </head>
+  <body>
+    <link id="templates" rel="import" href="/components/testing-timestamp/test/helpers/fixtures.html">
+    <script>
+      chai.should();
+      
+      window.addEventListener("WebComponentsReady", () => {
+      
+        let fix = timestampFixture("default");
+        
+        describe("Polymer Lifecycle Stages", () => {
+          
+          const polymerLifecycleStages = [ "created", "ready", "attached", "detatched" ];
+          
+          for(const _event of polymerLifecycleStages) {
+            (function(event) {
+              
+              describe(`<testing-timestamp>.lifecycle.${event}`, () => {
+                
+                let initial = 1;
+                if(event === "detatched") { initial = 0; }
+                
+                it(`is an object`, () => {
+                  fix.timestamp.lifecycle[event].should.be.an.object;
+                });
+                
+                describe(".count", () => {
+                  
+                  it(`starts at ${initial}`, () => {
+                    fix.timestamp.lifecycle[event].count.should.equal(initial);
+                  });
+                  
+                  if(event !== "created") {
+                    it(`increments when ${event}() is called`, () => {
+                      const start = fix.timestamp.lifecycle[event].count;
+                      fix.timestamp[event]();
+                      return flushAsync()
+                        .then(() => fix.timestamp.lifecycle[event].count.should.equal(start + 1));
+                    });
+                  }
+                  else {
+                    it.skip(`failing: increments when ${event}() is called`);
+                  }
+                });
+                
+              });
+              
+            })(_event);
+          }
+        
+        });
+      
+      });
+    </script>
+  </body>
+</html>

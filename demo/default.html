@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <title>testing-timestamp Demos</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+    <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+    <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+    <link rel="import" href="../testing-timestamp.html">
+    <custom-style>
+      <style is="custom-style" include="demo-pages-shared-styles">
+      </style>
+    </custom-style>
+  </head>
+  <body unresolved>
+    <div class="verical-section-container centered">
+      <h3>Standard Usage</h3>
+      <demo-snippet>
+        <template>
+          <testing-timestamp></testing-timestamp>
+        </template>
+      </demo-snippet>
+    </div>
+    <div class="vertical-section-container centered">
+      <h3>Each element measures itself</h3>
+      <demo-snippet>
+        <template>
+          <testing-timestamp></testing-timestamp>
+          <testing-timestamp></testing-timestamp>
+        </template>
+      </demo-snippet>
+    </div>
+    <div class="vertical-section-container centered">
+      <h3>'hidden' Hides Output</h3>
+      <demo-snippet>
+        <template>
+          <testing-timestamp hidden></testing-timestamp>
+        </template>
+      </demo-snippet>
+    </div>
+  </body>
+</html>

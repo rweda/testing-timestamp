@@ -4,7 +4,7 @@
   "description": "Track lifecycle events for tests.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "wct --configFile local.wct.conf.json"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
   "dependencies": {},
   "devDependencies": {
     "bower": "^1.8.0",
-    "polymer-cli": "^1.4.0"
+    "polymer-cli": "^1.4.0",
+    "web-component-tester": "^6.0.1"
   }
 }

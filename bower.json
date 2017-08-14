@@ -16,5 +16,11 @@
   ],
   "dependencies": {
     "polymer": "^2.0.2"
+  },
+  "devDependencies": {
+    "webcomponentsjs": "^1.0.7",
+    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#^2.0.0",
+    "web-component-tester": "^6.0.1",
+    "flush-async": "rweda/flush-async#^0.0.1"
   }
 }

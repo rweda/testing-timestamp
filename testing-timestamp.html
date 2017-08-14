@@ -1,0 +1,116 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+@todo Documentation
+@todo Also handle custom events
+@todo Cleanup "primary" setting
+-->
+<dom-module id="testing-timestamp">
+  <template>
+    <style>
+      :host[hidden] {
+        display: none;
+      }
+    </style>
+    <div>Last call: [[primaryData.last]] ([[primaryData.count]] total)</div>
+  </template>
+  <script>
+    (function() {
+      const polymerLifecycleStages = [ "created", "ready", "attached", "detatched" ];
+      const customElementLifecycle = [
+        "connectedCallback",
+        "disconnectedCallback",
+        "attributeChangedCallback",
+        "adoptedCallback",
+      ];
+      const lifecycleStages = [
+        ...polymerLifecycleStages,
+        //...customElementLifecycle,
+      ];
+      
+      function defaultLifecycleProperty() {
+        const prop = {};
+        for (const stage of lifecycleStages) {
+          prop[stage] = { triggered: false, count: 0, first: null, last: null };
+        }
+        return prop;
+      }
+      
+      function lifecycleMethods() {
+        const methods = {};
+        for(const stage of lifecycleStages) {
+          methods[stage] = function() {
+            const date = Date.now();
+            this.set(`lifecycle.${stage}.triggered`, true);
+            this.set(`lifecycle.${stage}.count`, this.lifecycle[stage].count + 1);
+            this.set(`lifecycle.${stage}.last`, date);
+            if(!this.lifecycle[stage].last) { this.set(`lifecycle.${stage}.first`, date); }
+            this._updatePrimary();
+          };
+        }
+        return methods;
+      }
+      
+      Polymer(Object.assign({}, lifecycleMethods(), {
+        
+        is: "testing-timestamp",
+        
+        properties: {
+          
+          /**
+           * Details about each lifecycle event (both Polymer and Custom Element lifecycle stages).
+           * Each event includes
+           * `triggered` (`true` if stage has been called),
+           * `count` (number of times stage was called),
+           *  and `first`/`last` (time, in ms, of first and last call).
+          */
+          lifecycle: {
+            type: Object,
+          },
+          
+          /**
+           * If `true`, the element won't be shown.  Otherwise, element shows the "primary" timestamp.
+          */
+          hidden: {
+            type: Boolean,
+            value: false,
+          },
+          
+          /**
+           * The primary event to display in the element.  Defaults to `"ready"`.
+          */
+          primary: {
+            type: String,
+            value: "ready",
+            observer: "_updatePrimary",
+          },
+          
+          /**
+           * The data for the "primary" event.
+          */
+          primaryData: {
+            type: Object,
+          },
+          
+        },
+        
+        created: function() {
+          this.lifecycle = defaultLifecycleProperty();
+          lifecycleMethods().created.call(this);
+        },
+        
+        _updatePrimary: function() {
+          const primary = this.lifecycle[this.primary];
+          if(!this.primaryData) {
+            this.set("primaryData", Object.assign({}, primary));
+            return;
+          }
+          for (const k of Object.keys(primary)) {
+            this.set(`primaryData.${k}`, primary[k]);
+          }
+        },
+        
+      }));
+    })();
+  </script>
+</dom-module>

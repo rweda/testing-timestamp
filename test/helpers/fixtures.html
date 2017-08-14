@@ -1,0 +1,54 @@
+<link rel="import" href="/components/testing-timestamp/testing-timestamp.html">
+
+<test-fixture id="default" imported="true">
+  <template>
+    <testing-timestamp></testing-timestamp>
+  </template>
+</test-fixture>
+
+<test-fixture id="hidden">
+  <template>
+    <testing-timestamp hidden></testing-timestamp>
+  </template>
+</test-fixture>
+
+<script>
+  (function() {
+    let templates, _fixture;
+    
+    beforeEach("load templates", () => {
+      if(document.querySelector(`test-fixture[imported]`)) {
+        templates = document;
+        return;
+      }
+      templates = document.querySelector(`link#templates[rel="import"]`).import;
+      if(!templates || !templates.getElementById) {
+        throw new ReferenceError(`Couldn't find imports.  Assign the <link> element loading the fixtures '#templates'`);
+      }
+    });
+    
+    beforeEach("implement 'fixture()'", () => {
+      _fixture = function(fixtureId, model) {
+        if(!templates) { throw new Error("'templates' not defined.  Make sure beforeEach('load templates') worked."); }
+        const fixture = templates.getElementById(fixtureId);
+        if(!fixture) { throw new Error(`Couldn't find fixture ${fixture}.`); }
+        afterEach(() => fixture.restore());
+        return fixture.create(model);
+      };
+    });
+    
+    window.timestampFixture = function(name) {
+      const vals = { timestamp: null };
+      
+      beforeEach(`create ${name} fixture`, () => {
+        vals.timestamp = _fixture(name);
+      });
+      
+      afterEach(`removes reference to fixture ${name}`, () => {
+        vals.timestamp = null;
+      });
+      
+      return vals;
+    }
+  }());
+</script>

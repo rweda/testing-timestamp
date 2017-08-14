@@ -10,4 +10,5 @@ addons:
       - google-chrome-stable
 
 script:
+  - bower install
   - xvfb-run npm test
